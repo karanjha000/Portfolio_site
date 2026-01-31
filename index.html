@@ -790,7 +790,8 @@
 
     <section id="contact" class="fade-in">
       <h2>Contact</h2>
-      <form id="contactForm" aria-label="Contact form">
+      <form method="POST" data-netlify="true" id="contactForm" aria-label="Contact form">
+        <input type="hidden" name="form-name" value="contact" />
         <input
           type="text"
           id="name"

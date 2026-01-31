@@ -1,4 +1,5 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
@@ -113,12 +114,4 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  if (NODE_ENV === "development") {
-    console.log(`\n═══════════════════════════════════════`);
-    console.log(`🚀 Portfolio Server Running`);
-    console.log(`📍 http://localhost:${PORT}`);
-    console.log(`💾 Messages stored in: ${dataFile}`);
-    console.log(`═══════════════════════════════════════\n`);
-  }
-});
+module.exports = serverless(app);

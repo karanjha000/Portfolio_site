@@ -5,11 +5,20 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const NODE_ENV = process.env.NODE_ENV || "development";
 
 // Middleware
 app.use(cors());
-app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.static(path.join(__dirname, "./"), { maxAge: "1d" }));
+
+// Security headers
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  next();
+});
 
 // Data storage file path
 const dataFile = path.join(__dirname, "messages.json");
@@ -18,6 +27,11 @@ const dataFile = path.join(__dirname, "messages.json");
 if (!fs.existsSync(dataFile)) {
   fs.writeFileSync(dataFile, JSON.stringify([], null, 2));
 }
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
+});
 
 // GET all messages (optional - for admin purposes)
 app.get("/api/messages", (req, res) => {
@@ -41,6 +55,17 @@ app.post("/api/contact", (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    // Email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ error: "Invalid email format" });
+    }
+
+    // Sanitize input
+    const sanitizedName = String(name).trim().substring(0, 100);
+    const sanitizedEmail = String(email).trim().toLowerCase();
+    const sanitizedMessage = String(message).trim().substring(0, 5000);
+
     // Read existing messages
     const data = fs.readFileSync(dataFile, "utf8");
     const messages = JSON.parse(data);
@@ -48,10 +73,10 @@ app.post("/api/contact", (req, res) => {
     // Add new message
     const newMessage = {
       id: Date.now(),
-      name,
-      email,
-      message,
-      timestamp,
+      name: sanitizedName,
+      email: sanitizedEmail,
+      message: sanitizedMessage,
+      timestamp: timestamp || new Date().toISOString(),
       read: false,
     };
 
@@ -67,18 +92,33 @@ app.post("/api/contact", (req, res) => {
       id: newMessage.id,
     });
 
-    console.log(`✓ New message from ${name} (${email}) - ID: ${newMessage.id}`);
+    if (NODE_ENV === "development") {
+      console.log(`✓ New message from ${sanitizedName} (${sanitizedEmail})`);
+    }
   } catch (error) {
     console.error("Error saving message:", error);
     res.status(500).json({ error: "Failed to save message" });
   }
 });
 
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error("Error:", err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
 // Start server
 app.listen(PORT, () => {
-  console.log(`\n═══════════════════════════════════════`);
-  console.log(`🚀 Portfolio Server Running`);
-  console.log(`📍 http://localhost:${PORT}`);
-  console.log(`💾 Messages stored in: ${dataFile}`);
-  console.log(`═══════════════════════════════════════\n`);
+  if (NODE_ENV === "development") {
+    console.log(`\n═══════════════════════════════════════`);
+    console.log(`🚀 Portfolio Server Running`);
+    console.log(`📍 http://localhost:${PORT}`);
+    console.log(`💾 Messages stored in: ${dataFile}`);
+    console.log(`═══════════════════════════════════════\n`);
+  }
 });

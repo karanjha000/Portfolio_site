@@ -2,9 +2,9 @@
   "name": "portfolio-karan-jha",
   "version": "1.0.0",
   "description": "Java Developer Portfolio with auto-scrolling carousels, contact form, and responsive design",
+  "main": "api/contact.js",
   "scripts": {
-    "build": "echo 'Build complete for Vercel'",
-    "dev": "node -e 'console.log("Using Vercel serverless functions. Run: vercel dev")'"
+    "dev": "vercel dev"
   },
   "keywords": ["portfolio", "contact-form", "java-developer"],
   "author": "Karan Jha",
@@ -16,7 +16,5 @@
     "dotenv": "^17.2.3",
     "nodemailer": "^6.9.4"
   },
-  "devDependencies": {
-    "nodemon": "^3.0.1"
-  }
+  "devDependencies": {}
 }

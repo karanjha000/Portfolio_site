@@ -3,52 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Java Developer portfolio. Building scalable, high-performance applications. Specializing in backend development, and enterprise solutions."
-    />
-    <meta
-      name="keywords"
-      content="Java developer, software engineer, backend development, Spring Boot, enterprise solutions"
-    />
-    <meta name="author" content="Karan jha" />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Java Developer | Portfolio" />
-    <meta
-      property="og:description"
-      content="Explore my Java development work and projects. Building robust, scalable backend solutions."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://yourportfolio.com/" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Java Developer | Portfolio" />
-    <meta
-      name="twitter:description"
-      content="Explore my Java development work and projects."
-    />
-    <link rel="canonical" href="https://yourportfolio.com/" />
     <title>Java Developer | Portfolio - Backend Development</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
-    <!-- Structured Data (Schema.org) -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org/",
-        "@type": "Person",
-        "name": "Karan Jha",
-        "jobTitle": "Java Developer",
-        "url": "https://yourportfolio.com/",
-        "sameAs": [
-          "https://linkedin.com/in/Karan-jha-k99999",
-          "https://github.com/karanjha000"
-        ]
-      }
-    </script>
     <style>
       :root {
         --navy: #0a192f;
@@ -401,6 +362,16 @@
         gap: 20px;
       }
 
+      #formMessage {
+        text-align: center;
+        margin-top: 10px;
+        display: none;
+      }
+
+      #formMessage.visible {
+        display: block;
+      }
+
       input,
       textarea {
         padding: 14px 16px;
@@ -628,7 +599,11 @@
               professional connections through a clean and user-friendly
               interface.
             </p>
-            <a class="cta" href="#">View Case Study</a>
+            <a
+              class="cta"
+              href="https://github.com/karanjha000/SkillConnect---Learn-Together-Solve-Together"
+              >View Case Study</a
+            >
           </div>
         </article>
         <article class="project-card">
@@ -671,7 +646,11 @@
               related records efficiently, focusing on structured data handling,
               usability, and reliable backend operations.
             </p>
-            <a class="cta" href="#">View Case Study</a>
+            <a
+              class="cta"
+              href="https://github.com/karanjha000/Book_Pilot_Manager"
+              >View Case Study</a
+            >
           </div>
         </article>
         <article class="project-card">
@@ -696,7 +675,9 @@
               with secure message handling, live updates, and a responsive
               interface for seamless user interaction.
             </p>
-            <a class="cta" href="#">View Case Study</a>
+            <a class="cta" href="https://github.com/karanjha000/Chat_App"
+              >View Case Study</a
+            >
           </div>
         </article>
       </div>
@@ -726,7 +707,7 @@
       </div>
     </section>
 
-    <section id="services" class="fade-in">
+    <section id="expertise" class="fade-in">
       <h2>Expertise</h2>
       <div class="services-grid">
         <div class="service">
@@ -759,7 +740,7 @@
     <section class="testimonials fade-in">
       <h2>Testimonials</h2>
       <div class="testimonial-grid">
-        <blockquote cite="#">
+        <blockquote>
           <p>
             "SkillConnect makes finding and showcasing skills incredibly simple.
             The platform is clean, fast, and actually useful for connecting
@@ -767,7 +748,7 @@
           </p>
           <footer>– Abhishek Jain, Tech Enthusiast</footer>
         </blockquote>
-        <blockquote cite="#">
+        <blockquote>
           <p>
             "I liked how smooth and intuitive SkillConnect feels. Everything
             from navigation to feature flow is well thought out, making it easy
@@ -775,7 +756,7 @@
           </p>
           <footer>– Aryan Chauhan, Tech Enthusiast</footer>
         </blockquote>
-        <blockquote cite="#">
+        <blockquote>
           <p>
             "SkillConnect stands out because it focuses on practicality. It’s
             not overloaded with unnecessary features and does exactly what it
@@ -812,10 +793,7 @@
           aria-label="Message"
         ></textarea>
         <button class="cta" type="submit">Send Message</button>
-        <p
-          id="formMessage"
-          style="text-align: center; margin-top: 10px; display: none"
-        ></p>
+        <p id="formMessage"></p>
       </form>
     </section>
 
@@ -848,57 +826,59 @@
       const hamburger = document.getElementById("hamburger");
       const navMenu = document.getElementById("navMenu");
 
-      hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("active");
-        navMenu.classList.toggle("active");
-      });
-
-      // Close menu when a link is clicked
-      navMenu.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => {
-          hamburger.classList.remove("active");
-          navMenu.classList.remove("active");
+      if (hamburger && navMenu) {
+        hamburger.addEventListener("click", () => {
+          hamburger.classList.toggle("active");
+          navMenu.classList.toggle("active");
         });
-      });
+
+        navMenu.querySelectorAll("a").forEach((link) => {
+          link.addEventListener("click", () => {
+            hamburger.classList.remove("active");
+            navMenu.classList.remove("active");
+          });
+        });
+      }
 
       // Auto-scrolling carousel functionality
       class ImageCarousel {
         constructor(carouselId, dotsContainerId, autoScrollInterval = 3000) {
-          this.carousel = document.getElementById(carouselId);
-          this.dotsContainer = document.getElementById(dotsContainerId);
+          const carousel = document.getElementById(carouselId);
+          const dotsContainer = document.getElementById(dotsContainerId);
+
+          if (!carousel || !dotsContainer) return;
+
+          this.carousel = carousel;
+          this.dotsContainer = dotsContainer;
           this.slides = this.carousel.querySelectorAll(".carousel-slide");
           this.dots = this.dotsContainer.querySelectorAll(".carousel-dot");
           this.currentSlide = 0;
           this.autoScrollInterval = autoScrollInterval;
+          this.autoScrollTimer = null;
+
           this.init();
         }
 
         init() {
-          // Add click listeners to dots
           this.dots.forEach((dot, index) => {
             dot.addEventListener("click", () => this.goToSlide(index));
           });
 
-          // Start auto-scroll
           this.startAutoScroll();
 
-          // Pause on hover, resume on mouse leave
-          this.carousel.parentElement.addEventListener("mouseenter", () =>
-            this.stopAutoScroll(),
-          );
-          this.carousel.parentElement.addEventListener("mouseleave", () =>
+          const container = this.carousel.parentElement;
+          container.addEventListener("mouseenter", () => this.stopAutoScroll());
+          container.addEventListener("mouseleave", () =>
             this.startAutoScroll(),
           );
         }
 
         goToSlide(index) {
           this.currentSlide = index % this.slides.length;
-          // Enable transition before transform
           this.carousel.style.transition =
             "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)";
           this.carousel.style.transform = `translateX(-${this.currentSlide * 100}%)`;
 
-          // Update dots
           this.dots.forEach((dot, i) => {
             dot.classList.toggle("active", i === this.currentSlide);
           });
@@ -916,61 +896,92 @@
         }
 
         stopAutoScroll() {
-          clearInterval(this.autoScrollTimer);
+          if (this.autoScrollTimer) clearInterval(this.autoScrollTimer);
         }
       }
 
-      // Initialize carousels for all projects
       new ImageCarousel("skillConnectCarousel", "skillConnectDots", 3000);
       new ImageCarousel("bookPilotCarousel", "bookPilotDots", 3000);
       new ImageCarousel("klyraCarousel", "klyraDots", 3000);
 
-      // Form submission handler
-      const contactForm = document.getElementById("contactForm");
-      const formMessage = document.getElementById("formMessage");
-
-      contactForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const message = document.getElementById("message").value;
+      // Track visitor (only once per session)
+      (async () => {
+        if (sessionStorage.getItem("visitTracked")) return;
 
         try {
-          formMessage.style.display = "block";
-          formMessage.style.color = "#007bff";
-          formMessage.textContent = "Sending your message...";
-
-          const response = await fetch("/api/contact", {
+          const response = await fetch("/api/visit", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              name,
-              email,
-              message,
+              userAgent: navigator.userAgent,
+              referrer: document.referrer || "Direct",
               timestamp: new Date().toISOString(),
             }),
           });
 
           if (response.ok) {
-            formMessage.style.color = "#28a745";
-            formMessage.textContent =
-              "Message sent successfully! I'll get back to you soon.";
-            contactForm.reset();
-            setTimeout(() => {
-              formMessage.style.display = "none";
-            }, 5000);
-          } else {
-            throw new Error("Failed to send message");
+            sessionStorage.setItem("visitTracked", "true");
           }
         } catch (error) {
-          formMessage.style.color = "#dc3545";
-          formMessage.textContent = "Error sending message. Please try again.";
-          console.error("Error:", error);
+          console.error("Visit tracking error:", error.message);
         }
-      });
+      })();
+
+      // Form submission handler
+      const contactForm = document.getElementById("contactForm");
+      const formMessage = document.getElementById("formMessage");
+
+      if (contactForm && formMessage) {
+        contactForm.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const name = document.getElementById("name")?.value?.trim();
+          const email = document.getElementById("email")?.value?.trim();
+          const message = document.getElementById("message")?.value?.trim();
+
+          if (!name || !email || !message) {
+            formMessage.style.color = "#dc3545";
+            formMessage.textContent = "Please fill in all fields.";
+            formMessage.classList.add("visible");
+            return;
+          }
+
+          try {
+            formMessage.classList.add("visible");
+            formMessage.style.color = "#007bff";
+            formMessage.textContent = "Sending your message...";
+
+            const response = await fetch("/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name,
+                email,
+                message,
+                timestamp: new Date().toISOString(),
+              }),
+            });
+
+            if (response.ok) {
+              formMessage.style.color = "#28a745";
+              formMessage.textContent =
+                "Message sent successfully! I'll get back to you soon.";
+              contactForm.reset();
+              setTimeout(() => formMessage.classList.remove("visible"), 5000);
+            } else {
+              throw new Error(
+                (await response.json()).error || "Failed to send message",
+              );
+            }
+          } catch (error) {
+            formMessage.style.color = "#dc3545";
+            formMessage.textContent =
+              "Error sending message. Please try again.";
+            formMessage.classList.add("visible");
+            console.error("Contact form error:", error.message);
+          }
+        });
+      }
     </script>
   </body>
 </html>

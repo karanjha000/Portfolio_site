@@ -1,5 +1,14 @@
 const nodemailer = require("nodemailer");
 
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
+
+const setCORSHeaders = (res) => {
+  res.setHeader("Access-Control-Allow-Origin", CORS_ORIGIN);
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Max-Age", "86400");
+};
+
 let transporter;
 if (process.env.NODE_ENV === "development" || !process.env.EMAIL_USER) {
   transporter = {
@@ -32,6 +41,12 @@ const emailCSS = `
 `;
 
 module.exports = async (req, res) => {
+  setCORSHeaders(res);
+  
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+  
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
